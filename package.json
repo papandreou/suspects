@@ -1,6 +1,6 @@
 {
   "name": "suspects",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Help locate a regression by listing the npm package releases that might have broken your build",
   "repository": {
     "type": "git",
