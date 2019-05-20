@@ -6,7 +6,7 @@ const inquirer = require('inquirer');
 const promisify = require('util').promisify;
 const pMap = require('p-map');
 
-let { good, bad } = require('yargs')
+const { good, bad } = require('yargs')
   .option('good', {
     type: 'string',
     describe: 'Date or datetime where the project was last known to work'
@@ -17,7 +17,7 @@ let { good, bad } = require('yargs')
   }).argv;
 
 async function exec(cmd) {
-  return await promisify(cb =>
+  return promisify(cb =>
     childProcess.exec(cmd, { maxBuffer: 999999999 }, cb.bind(null))
   )();
 }
@@ -29,7 +29,7 @@ async function getTimeOfHeadCommit() {
 }
 
 (async () => {
-  let goodTime = new Date(
+  const goodTime = new Date(
     good ||
       (await inquirer.prompt({
         type: 'input',
@@ -40,7 +40,7 @@ async function getTimeOfHeadCommit() {
       })).good
   );
 
-  let badTime = new Date(
+  const badTime = new Date(
     bad ||
       (await inquirer.prompt({
         type: 'input',
