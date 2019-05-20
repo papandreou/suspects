@@ -85,7 +85,7 @@ async function getTimeOfHeadCommit() {
             semver.satisfies(version, from)
           );
         } catch (err) {
-          console.warn(err.message);
+          console.warn(`${packageName}: ${err.message}`);
         }
         if (time > goodTime && time <= badTime && isWithinRange) {
           culprits.push({ packageName, version, time });
