@@ -79,16 +79,19 @@ async function getTimeOfHeadCommit() {
           continue;
         }
         const time = new Date(timeStr);
-        let isWithinRange = true;
-        try {
-          isWithinRange = froms[packageName].some(from =>
-            semver.satisfies(version, from)
-          );
-        } catch (err) {
-          console.warn(`${packageName}: ${err.message}`);
-        }
-        if (time > goodTime && time <= badTime && isWithinRange) {
-          culprits.push({ packageName, version, time });
+        if (time > goodTime && time <= badTime) {
+          let isWithinRange = true;
+          try {
+            isWithinRange = froms[packageName].some(from =>
+              semver.satisfies(version, from)
+            );
+          } catch (err) {
+            console.warn(`${packageName}: ${err.message}`);
+          }
+
+          if (isWithinRange) {
+            culprits.push({ packageName, version, time });
+          }
         }
       }
     },
