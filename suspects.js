@@ -31,24 +31,28 @@ async function getTimeOfHeadCommit() {
 (async () => {
   const goodTime = new Date(
     good ||
-      (await inquirer.prompt({
-        type: 'input',
-        message: 'When did it last work?',
-        default: await getTimeOfHeadCommit(),
-        name: 'good',
-        validate: str => !isNaN(new Date(str).getTime())
-      })).good
+      (
+        await inquirer.prompt({
+          type: 'input',
+          message: 'When did it last work?',
+          default: await getTimeOfHeadCommit(),
+          name: 'good',
+          validate: str => !isNaN(new Date(str).getTime())
+        })
+      ).good
   );
 
   const badTime = new Date(
     bad ||
-      (await inquirer.prompt({
-        type: 'input',
-        message: 'When did it stop working?',
-        name: 'bad',
-        default: new Date().toLocaleString(),
-        validate: str => !isNaN(new Date(str).getTime())
-      })).bad
+      (
+        await inquirer.prompt({
+          type: 'input',
+          message: 'When did it stop working?',
+          name: 'bad',
+          default: new Date().toLocaleString(),
+          validate: str => !isNaN(new Date(str).getTime())
+        })
+      ).bad
   );
 
   const npmLs = JSON.parse(await exec('npm ls --json'));
